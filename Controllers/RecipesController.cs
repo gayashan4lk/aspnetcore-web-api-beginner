@@ -8,14 +8,22 @@ namespace RamenRecipes.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        /*[HttpGet]
+        [HttpGet("dishes")] // /api/recipes/dishes
         public string[] GetDishes()
         {
             string[] dishes = { "Chicken Ramen", "Pork Ramen", "Beef Ramen", "Traditional Ramin", "Miso Ramen" };
             return dishes;
-        }*/
+        }
 
-        [HttpGet]
+        [HttpGet("dish/{id}")] // /api/recipes/dish/0 will return Chicken Ramen
+        public string GetDish(string id)
+        {
+            int index = int.Parse(id);
+            string[] dishes = { "Chicken Ramen", "Pork Ramen", "Beef Ramen", "Traditional Ramin", "Miso Ramen" };
+            return dishes[index];
+        }
+
+        [HttpGet("recipes")] // /api/recipes/recipes
         public ActionResult GetRecipes()
         {
             string[] recipes = { "Chicken Ramen", "Pork Ramen", "Beef Ramen", "Traditional Ramin", "Miso Ramen", "Seafood Ramen" };
@@ -27,7 +35,7 @@ namespace RamenRecipes.Controllers
             return Ok(recipes);
         }
 
-        [HttpPost]
+        [HttpPost] // /api/recipes/
         public ActionResult CreateNewRecipes()
         {
             bool success = true;
@@ -42,7 +50,7 @@ namespace RamenRecipes.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("all")] // /api/recipes/all
         public ActionResult DeleteRecipes()
         {
             bool shitHappens = false;
