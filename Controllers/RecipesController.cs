@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using RamenRecipes.Models;
 
 namespace RamenRecipes.Controllers
 {
@@ -8,8 +9,38 @@ namespace RamenRecipes.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
+        /*[HttpGet] // /api/recipes/dishes
+        public ActionResult GetDishes([FromQuery]int count)
+        {
+            string[] dishes = { "Chicken Ramen", "Pork Ramen", "Beef Ramen", "Traditional Ramin", "Miso Ramen" };
+            if (!dishes.Any())
+            {
+                return NotFound();
+            }
+            return Ok(dishes.Take(count));
+        }*/
+
+        [HttpGet] // /api/recipes/
+        public ActionResult GetDishes([FromQuery] int count)
+        {
+            Recipe[] recipes =
+            {
+                new() { Title = "Chicken Ramen" },
+                new() { Title = "Pork Ramen" },
+                new() { Title = "Beef Ramen" },
+                new() { Title = "Traditional Ramen" },
+                new() { Title = "Miso Ramen" },
+            };
+
+            if (!recipes.Any())
+            {
+                return NotFound();
+            }
+            return Ok(recipes.Take(count));
+        }
+
         [HttpGet("dishes")] // /api/recipes/dishes
-        public string[] GetDishes()
+        public string[] GetAllDishes()
         {
             string[] dishes = { "Chicken Ramen", "Pork Ramen", "Beef Ramen", "Traditional Ramin", "Miso Ramen" };
             return dishes;
@@ -35,7 +66,7 @@ namespace RamenRecipes.Controllers
             return Ok(recipes);
         }
 
-        [HttpPost] // /api/recipes/
+        /*[HttpPost] // /api/recipes/
         public ActionResult CreateNewRecipes()
         {
             bool success = true;
@@ -48,6 +79,17 @@ namespace RamenRecipes.Controllers
             {
                 return BadRequest();
             }
+        }*/
+
+        [HttpPost]
+        public ActionResult CreateNewRecipe([FromBody] Recipe newRecipe)
+        {
+            bool shitHappens = false;
+            if(shitHappens)
+            {
+                return BadRequest();
+            }
+            return Created("", newRecipe);
         }
 
         [HttpDelete("all")] // /api/recipes/all
